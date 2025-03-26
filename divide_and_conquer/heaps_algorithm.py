@@ -26,26 +26,26 @@ def heaps(arr: list) -> list:
     ...     for x in ([], [0], [-1, 1], [1, 2, 3]))
     True
     """
-
     if len(arr) <= 1:
         return [tuple(arr)]
 
     res = []
-
+    
     def generate(k: int, arr: list):
         if k == 1:
-            res.append(tuple(arr[:]))
+            # Directly append the permuted array as tuple
+            res.append(tuple(arr))
             return
 
-        generate(k - 1, arr)
-
-        for i in range(k - 1):
+        for i in range(k-1):
+            generate(k - 1, arr)
             if k % 2 == 0:  # k is even
                 arr[i], arr[k - 1] = arr[k - 1], arr[i]
             else:  # k is odd
                 arr[0], arr[k - 1] = arr[k - 1], arr[0]
-            generate(k - 1, arr)
 
+        generate(k - 1, arr)
+    
     generate(len(arr), arr)
     return res
 
